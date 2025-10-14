@@ -41,10 +41,10 @@
 </head>
 <body onload="init()">
   <!-- Schermata di caricamento -->
-  <div id="loadingScreen">
-    <h3>Caricamento in corso...</h3>
-    <div class="spinner"></div>
-  </div>
+ <div id="loadingOverlay">
+  <div class="spinner"></div>
+  <p>Caricamento in corso...</p>
+</div>
 
   <div id="formWrapper" style="display:none;">
     <h2>MODULO PRENOTAZIONE APPUNTAMENTO MANUTENZIONE AUTO</h2>
@@ -135,7 +135,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbwo7KNaTHkDrpbvK6u_uzYX
 let dateDisponibili = [];
 
 async function init(){
-  const loadingScreen = document.getElementById("loadingScreen");
+  const loadingScreen = document.getElementById("loadingOverlay");
   const formWrapper = document.getElementById("formWrapper");
   
   // Caricamento finto di 5 secondi
