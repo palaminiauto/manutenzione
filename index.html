@@ -132,7 +132,7 @@ const altroCheck = document.getElementById('altroCheck');
   
 const API_URL = 'https://script.google.com/macros/s/AKfycbwo7KNaTHkDrpbvK6u_uzYXlZgh-4VoizoTnGCijEcxFB4g_3T5zu29UWi7QSE2SICJqQ/exec';
 
-let dbTarghe = {}, dateDisponibili = [], targaValida = false, targaQuantita = 0;
+let dateDisponibili = [];
 
 async function init(){
   const loadingScreen = document.getElementById("loadingScreen");
@@ -153,8 +153,7 @@ async function init(){
       throw new Error(data.error);
     }
     
-    dbTarghe = data.database || {};
-    
+       
     // Unisci e ordina le date
     const date1ora = data.date && data.date["1h"] ? data.date["1h"] : [];
     const date3ore = data.date && data.date["3h"] ? data.date["3h"] : [];
@@ -241,95 +240,7 @@ function popolaDateDropdown() {
   });
 }
 
-function aggiornaVisibilita(){
-  const cliente = document.querySelector('input[name="tipologiacliente"]:checked')?.value;
-  const depositoContainer = document.getElementById("depositoContainer");
-  const campiAuto = document.getElementById("campiAuto");
-  const campiContatti = document.getElementById("campiContatti");
 
-  if(cliente === "PRIVATO"){
-    depositoContainer.classList.remove("hidden");
-    campiAuto.classList.add("hidden");
-    campiContatti.classList.add("hidden");
-  } else if(cliente === "NOLEGGI") {
-    depositoContainer.classList.add("hidden");
-    campiAuto.classList.remove("hidden");
-    campiContatti.classList.remove("hidden");
-  }
-
-  document.querySelectorAll('input[name="dep"]').forEach(el => el.checked = false);
-  document.getElementById("msgDepNo").style.display = "none";
-  targaValida = false;
-  document.getElementById("targaMsg").innerHTML = "✏️ Inserisci la targa (7 caratteri)";
-  aggiornaStatoPrenota();
-}
-
-function aggiornaCampi(){
-  const dep = document.querySelector('input[name="dep"]:checked')?.value;
-  const campiAuto = document.getElementById("campiAuto");
-  const campiContatti = document.getElementById("campiContatti");
-
-  if(dep === "SI" || dep === "NO"){
-    campiAuto.classList.remove("hidden");
-    campiContatti.classList.remove("hidden");
-  } else {
-    campiAuto.classList.add("hidden");
-    campiContatti.classList.add("hidden");
-  }
-
-  const msg = document.getElementById("msgDepNo");
-  msg.style.display = dep === "NO" ? "block" : "none";
-  targaValida = false;
-  aggiornaStatoPrenota();
-}
-
-function checkTargaInput(input) {
-  input = input || document.getElementById("targa");
-  const t = input.value.trim().toUpperCase();
-  const marcaInput = document.getElementById("marcaModello");
-  const msg = document.getElementById("targaMsg");
-
-  const cliente = document.querySelector('input[name="tipologiacliente"]:checked')?.value;
-  const dep = document.querySelector('input[name="dep"]:checked')?.value;
-  const manual = (cliente === "PRIVATO" && dep === "NO");
-
-  if (manual) {
-    if (t.length === 7) {
-      targaValida = true;
-      input.style.borderColor = "green";
-      msg.innerHTML = "✅ Targa valida";
-    } else {
-      targaValida = false;
-      input.style.borderColor = "";
-      msg.innerHTML = "✏️ Inserisci la targa (7 caratteri)";
-    }
-  } else {
-    if (t.length !== 7) {
-      targaValida = false;
-      input.style.borderColor = "";
-      msg.innerHTML = "✏️ Inserisci la targa (7 caratteri)";
-    } else {
-      if (dbTarghe && dbTarghe[t]) {
-        depohtml = dbTarghe[t].depo || "nd";
-        targaQuantita = dbTarghe[t].quantita || 0;
-        marcaInput.value = dbTarghe[t].modello || "";
-        input.style.borderColor = "green";
-        if (targaQuantita >= 4) {
-          msg.innerHTML = "✅ Targa valida. Ci sono " + targaQuantita + " pneumatici in deposito (" + depohtml +")";
-          targaValida = true;
-        } else {
-          msg.innerHTML = "⚠️ Targa valida. Ci sono solo " + targaQuantita + " pneumatici in deposito. È necessario passare in officina per prendere appuntamento (" + depohtml +")";
-          targaValida = false;
-        }
-      } else {
-        targaValida = false;
-        input.style.borderColor = "red";
-        msg.innerHTML = "❌ Targa non trovata in deposito. È necessario passare in officina per prendere appuntamento.";
-      }
-    }
-  }
-  aggiornaStatoPrenota();
-}
 
 function aggiornaStatoPrenota(){
   const btn = document.getElementById("prenota");
