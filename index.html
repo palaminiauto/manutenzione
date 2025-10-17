@@ -298,6 +298,10 @@
           
       <label>MARCA E MODELLO AUTO:</label>
       <input type="text" id="marcaModello">
+      <div style="color: #999; font-size: 13px; margin-top: 5px; text-align: center;">
+      MARCA E MODELLO AUTO, ALIMENTAZIONE E TIPOLOGIA CAMBIO<br>
+      (Esempio: Fiat Panda Benzina Cambio Manuale)
+      </div>
          
       <label>NOME E COGNOME:</label>
       <input type="text" id="nomeCognome" onchange="aggiornaStatoPrenota()">
@@ -317,6 +321,11 @@
         <label><input type="checkbox" id="altroCheck"> Altro:</label>
         <input type="text" id="altroTesto" placeholder="Specifica qui..." />
       </div>
+
+     <div style="background: #fff3e0; border: 2px solid #ff9800; border-radius: 8px; padding: 12px; margin-top: 15px; color: #e65100; font-size: 14px; text-align: center;">
+    ⚠️ È indicato l'orario di accettazione auto, per la manutenzione ordinaria è stimata la riconsegna del veicolo in 7 ore lavorative.<br>
+     Avviseremo comunque tramite un messaggio WhatsApp quando la macchina sarà pronta per la riconsegna.
+    </div>
 
       <label>DATA APPUNTAMENTO:</label>
       <select id="dataAppuntamento" onchange="aggiornaStatoPrenota()">
