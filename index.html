@@ -482,7 +482,7 @@ function aggiornaStatoPrenota(){
   const nomeOk = document.getElementById("nomeCognome").value.trim() !== "";
   const kmOk = document.getElementById("km").value.trim() !== "";
   const modelloOk = document.getElementById("marcaModello").value.trim() !== "";
-  const lavorazioneOk = document.getElementById("lavorazione").value.trim() !== "";
+  const lavorazioneOk = document.querySelectorAll('input[name="lavorazione"]:checked').length > 0 || (altroCheck.checked && altroTesto.value.trim() !== "");
  
 
   btn.disabled = !(targaOk && dataOk && telOk && emailOk && nomeOk && kmOk && modelloOk && lavorazioneOk);
