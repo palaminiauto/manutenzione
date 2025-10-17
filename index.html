@@ -291,13 +291,13 @@
       </div>
 
       <label>TARGA AUTO:</label>
-      <input type="text" id="targa" maxlength="7" oninput="aggiornaStatoPrenota()" style="text-transform:uppercase;">
+      <input type="text" id="targa" maxlength="7" onchange="aggiornaStatoPrenota() style="text-transform:uppercase;">
 
       <label>KM AUTO:</label>
-      <input type="text" id="km">
+      <input type="text" id="km" onchange="aggiornaStatoPrenota()>
           
       <label>MARCA E MODELLO AUTO:</label>
-      <input type="text" id="marcaModello">
+      <input type="text" id="marcaModello" onchange="aggiornaStatoPrenota()>
       <div style="color: #999; font-size: 13px; margin-top: 5px; text-align: center;">
       MARCA E MODELLO AUTO, ALIMENTAZIONE E TIPOLOGIA CAMBIO<br>
       (Esempio: Fiat Panda Benzina Cambio Manuale)
@@ -315,10 +315,10 @@
       <label style="margin-top:20px;">LAVORAZIONE RICHIESTA:</label>
 
       <div class="checkbox-group">
-        <label><input type="checkbox" name="lavorazione" value="Tagliando"> Tagliando e/o cambio olio</label>
-        <label><input type="checkbox" name="lavorazione" value="Spazzole"> Spazzole tergicristallo</label>
-        <label><input type="checkbox" name="lavorazione" value="AdBlue"> AdBlue (gratuito per Unipol Rental)</label>
-        <label><input type="checkbox" id="altroCheck"> Altro:</label>
+        <label><input type="checkbox" name="lavorazione" value="Tagliando" onchange="aggiornaStatoPrenota()"> Tagliando e/o cambio olio</label>
+        <label><input type="checkbox" name="lavorazione" value="Spazzole" onchange="aggiornaStatoPrenota()"> Spazzole tergicristallo</label>
+        <label><input type="checkbox" name="lavorazione" value="AdBlue" onchange="aggiornaStatoPrenota()"> AdBlue (gratuito per Unipol Rental)</label>
+        <label><input type="checkbox" id="altroCheck" onchange="aggiornaStatoPrenota()"> Altro:</label>
         <input type="text" id="altroTesto" placeholder="Specifica qui..." />
       </div>
 
@@ -480,9 +480,13 @@ function aggiornaStatoPrenota(){
   const telOk = document.getElementById("telefono").value.trim() !== "";
   const emailOk = document.getElementById("email").value.trim() !== "";
   const nomeOk = document.getElementById("nomeCognome").value.trim() !== "";
+  const kmOk = document.getElementById("km").value.trim() !== "";
+  const modelloOk = document.getElementById("marcaModello").value.trim() !== "";
+  const lavorazioneOk = document.getElementById("lavorazione").value.trim() !== "";
+ 
 
-  btn.disabled = !(targaOk && dataOk && telOk && emailOk && nomeOk);
-  document.getElementById("alertObbligatorio").style.display = (targaOk && dataOk && telOk && emailOk && nomeOk) ? "none" : "block";
+  btn.disabled = !(targaOk && dataOk && telOk && emailOk && nomeOk && kmOk && modelloOk && lavorazioneOk);
+  document.getElementById("alertObbligatorio").style.display = (targaOk && dataOk && telOk && emailOk && nomeOk && kmOk && modelloOk && lavorazioneOk) ? "none" : "block";
 }
 
 async function invia(){
