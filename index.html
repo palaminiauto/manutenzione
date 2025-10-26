@@ -294,7 +294,7 @@
       <input type="text" id="targa" maxlength="7" onchange="aggiornaStatoPrenota()" style="text-transform:uppercase;">
 
       <label>KM AUTO:</label>
-      <input type="text" id="km" onchange="aggiornaStatoPrenota()">
+      <input type="text" inputmode="tel" id="km" onchange="aggiornaStatoPrenota()">
           
       <label>MARCA E MODELLO AUTO:</label>
       <input type="text" id="marcaModello" onchange="aggiornaStatoPrenota()">
@@ -317,7 +317,6 @@
       <div class="checkbox-group">
         <label><input type="checkbox" name="lavorazione" value="Tagliando" onchange="aggiornaStatoPrenota()"> Tagliando e/o cambio olio</label>
         <label><input type="checkbox" name="lavorazione" value="Spazzole" onchange="aggiornaStatoPrenota()"> Spazzole tergicristallo</label>
-        <label><input type="checkbox" name="lavorazione" value="AdBlue" onchange="aggiornaStatoPrenota()"> AdBlue (gratuito per Unipol Rental)</label>
         <label><input type="checkbox" id="altroCheck" onchange="aggiornaStatoPrenota()"> Altro:</label>
         <input type="text" id="altroTesto" placeholder="Specifica qui..." />
       </div>
