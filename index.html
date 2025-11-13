@@ -386,7 +386,8 @@ async function init(){
   try {
     const response = await fetch(API_URL);
     const data = await response.json();
-    
+    console.log('✅ Dati ricevuti:', data);
+   
     if (data.error) {
       throw new Error(data.error);
     }
@@ -513,28 +514,34 @@ async function invia(){
     dataAppuntamento: document.getElementById("dataAppuntamento").value
   };
 
-  try {
+ console.log('📤 Invio dati:', dati); 
+ 
+ try {
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({ action: 'salvaPrenotazione', dati: dati })
     });
 
     const result = await response.json();
-
+    console.log('📋 Risultato:', result);
+  
     document.getElementById("sendingOverlay").style.display = "none";
 
     if (result.success) {
+      console.log('✅ Prenotazione confermata');
       document.getElementById("formWrapper").style.display = "none";
       const overlay = document.getElementById("successOverlay");
       overlay.style.display = "block";
       overlay.scrollIntoView({behavior:"smooth", block:"center"});
     } else {
+      console.error('❌ Errore server:', result.error);
       const errorOverlay = document.getElementById("errorOverlay");
       errorOverlay.style.display = "block";
       errorOverlay.scrollIntoView({behavior:"smooth", block:"center"});
       btn.disabled = false;
     }
   } catch(error) {
+    console.error('❌ Errore fetch:', error);
     document.getElementById("sendingOverlay").style.display = "none";
     const errorOverlay = document.getElementById("errorOverlay");
     errorOverlay.style.display = "block";
