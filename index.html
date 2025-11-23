@@ -444,9 +444,15 @@ function parseDateString(str) {
   
   const day = parseInt(parts[1]);
   const month = months[parts[2]];
-  const now = new Date();
-  const year = now.getFullYear();
   const [hours, minutes] = parts[3].split(":").map(Number);
+  
+  const now = new Date();
+  let year = now.getFullYear();
+  
+  // Se il mese è prima del mese corrente, significa anno prossimo
+  if (month < now.getMonth() || (month === now.getMonth() && day < now.getDate())) {
+    year++;
+  }
   
   return new Date(year, month, day, hours, minutes);
 }
@@ -466,7 +472,6 @@ function unisciEOrdinaDate(array1, array2) {
   const allDates = [...array1, ...array2];
   return ordinaDate(allDates);
 }
-
 function aggiornaStatoPrenota(){
   const btn = document.getElementById("prenota");
   const targaOk = document.getElementById("targa").value.trim();
