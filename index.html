@@ -160,7 +160,7 @@ function aggiornaRiconsegna() {
   data.setHours(parseInt(orario[0]), parseInt(orario[1]), 0, 0);
 
   // 7 ore lavorative = 420 minuti
-  let minutiDaAggiungere = 450; 
+  let minutiDaAggiungere = 451; 
   
   while (minutiDaAggiungere > 0) {
     data.setMinutes(data.getMinutes() + 1);
@@ -193,7 +193,9 @@ function aggiornaRiconsegna() {
   const oraFmt = data.getHours().toString().padStart(2, '0') + ":" + data.getMinutes().toString().padStart(2, '0');
   dataRiconsegnaStimata = giorniSett[data.getDay()] + " " + data.getDate() + " " + nomiMesi[data.getMonth()] + " ore " + oraFmt;
   
-  info.innerHTML = "🚗 Riconsegna veicolo stimata:<br>" + dataRiconsegnaStimata.toUpperCase() + "Avviseremo comunque non appena il veicolo sarà pronto tramite un messaggio whatsapp!";
+  info.innerHTML = "🚗 Riconsegna veicolo stimata:<br>" + 
+                   dataRiconsegnaStimata.toUpperCase() + 
+                   "<br>Avviseremo comunque non appena il veicolo sarà pronto tramite un messaggio WhatsApp!";
   info.style.display = "block";
 }
 
