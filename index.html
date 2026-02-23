@@ -142,7 +142,11 @@ function aggiornaRiconsegna() {
   const info = document.getElementById("infoRiconsegna");
   const valore = select.value;
 
-  if (!valore) { info.style.display = "none"; dataRiconsegnaStimata = ""; return; }
+  if (!valore) { 
+    info.style.display = "none"; 
+    dataRiconsegnaStimata = ""; 
+    return; 
+  }
 
   const mesi = {"gennaio":0,"febbraio":1,"marzo":2,"aprile":3,"maggio":4,"giugno":5,"luglio":6,"agosto":7,"settembre":8,"ottobre":9,"novembre":10,"dicembre":11};
   const parti = valore.toLowerCase().split(" ");
@@ -155,30 +159,41 @@ function aggiornaRiconsegna() {
   data.setMonth(mese);
   data.setHours(parseInt(orario[0]), parseInt(orario[1]), 0, 0);
 
-  let minutiDaAggiungere = 7 * 60; // 7 ore lavorative
+  // 7 ore lavorative = 420 minuti
+  let minutiDaAggiungere = 450; 
   
   while (minutiDaAggiungere > 0) {
     data.setMinutes(data.getMinutes() + 1);
-    let oraDec = data.getHours() + (data.getMinutes() / 60);
-
-    // Pausa pranzo 12:30 - 14:00
-    if (oraDec > 12.5 && oraDec < 14) data.setHours(14, 0, 0, 0);
     
-    // Chiusura 18:30 - Riapertura 08:00
-    if (oraDec > 18.5 || oraDec < 8) {
+    let h = data.getHours();
+    let m = data.getMinutes();
+    let oraDecimale = h + (m / 60);
+
+    // 1. Pausa pranzo: se superiamo le 12:30, saltiamo alle 14:00
+    if (oraDecimale > 12.5 && oraDecimale < 14) {
+      data.setHours(14, 0, 0, 0);
+    }
+    
+    // 2. Chiusura serale: se superiamo le 18:30, saltiamo alle 08:00 del giorno dopo
+    if (oraDecimale > 18.5 || oraDecimale < 8) {
       data.setDate(data.getDate() + 1);
       data.setHours(8, 0, 0, 0);
-      if (data.getDay() === 6) data.setDate(data.getDate() + 2);
-      if (data.getDay() === 0) data.setDate(data.getDate() + 1);
+      
+      // Salto weekend
+      if (data.getDay() === 6) data.setDate(data.getDate() + 2); // Sabato -> Lunedì
+      if (data.getDay() === 0) data.setDate(data.getDate() + 1); // Domenica -> Lunedì
     }
+    
     minutiDaAggiungere--;
   }
 
   const giorniSett = ["domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"];
   const nomiMesi = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
   
-  dataRiconsegnaStimata = giorniSett[data.getDay()] + " " + data.getDate() + " " + nomiMesi[data.getMonth()] + " ore " + data.getHours().toString().padStart(2, '0') + ":" + data.getMinutes().toString().padStart(2, '0');
-  info.innerHTML = "🚗 Riconsegna veicolo stimata entro le:<br>" + dataRiconsegnaStimata.toUpperCase();
+  const oraFmt = data.getHours().toString().padStart(2, '0') + ":" + data.getMinutes().toString().padStart(2, '0');
+  dataRiconsegnaStimata = giorniSett[data.getDay()] + " " + data.getDate() + " " + nomiMesi[data.getMonth()] + " ore " + oraFmt;
+  
+  info.innerHTML = "🚗 Riconsegna veicolo stimata:<br>" + dataRiconsegnaStimata.toUpperCase() + "Avviseremo comunque non appena il veicolo sarà pronto tramite un messaggio whatsapp!";
   info.style.display = "block";
 }
 
