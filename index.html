@@ -175,7 +175,7 @@ function aggiornaRiconsegna() {
     }
     
     // 2. Chiusura serale: se superiamo le 18, saltiamo alle 08:00 del giorno dopo
-    if (oraDecimale > 17.98 || oraDecimale < 8) {
+    if (oraDecimale > 17.99 || oraDecimale < 8) {
       data.setDate(data.getDate() + 1);
       data.setHours(8, 0, 0, 0);
       
