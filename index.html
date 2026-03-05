@@ -175,12 +175,12 @@ function aggiornaRiconsegna() {
     }
     
     // 2. Chiusura serale: se superiamo le 18, saltiamo alle 08:00 del giorno dopo
-    if (oraDecimale > 18 || oraDecimale < 8) {
+    if (oraDecimale > 17.90 || oraDecimale < 8) {
       data.setDate(data.getDate() + 1);
       data.setHours(8, 0, 0, 0);
       
       // Salto weekend
-      if (data.getDay() === 6) data.setDate(data.getDate() + 2); // Sabato -> Lunedì
+      // if (data.getDay() === 6) data.setDate(data.getDate() + 2); // Sabato -> Lunedì
       if (data.getDay() === 0) data.setDate(data.getDate() + 1); // Domenica -> Lunedì
     }
     
